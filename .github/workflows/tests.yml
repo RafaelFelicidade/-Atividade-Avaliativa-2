@@ -1,4 +1,5 @@
-name: Testes de Integração
+php artisan migrate
+php artisan route:list | grep -v vendorname: Testes de Integração
 
 on:
   pull_request:
