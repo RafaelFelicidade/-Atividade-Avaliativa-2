@@ -8,31 +8,73 @@ Testes de integração para os endpoints da API, cobrindo cenários válidos, in
 
 ## Endpoints Testados
 
-### Bibliotecas (`/bibliotecas`)
+### Bibliotecas - 7 testes PASSANDO
+- listar bibliotecas
+- criar biblioteca com dados válidos
+- criar biblioteca sem nome
+- atualizar biblioteca
+- atualizar biblioteca inexistente
+- deletar biblioteca
+- deletar biblioteca inexistente
 
-| # | Teste | Descrição | Status |
-|---|-------|-----------|--------|
-| 1 | listar bibliotecas | GET /bibliotecas retorna status 200 | ✅ Passou |
-| 2 | criar biblioteca com dados válidos | POST com nome e endereço válidos | ✅ Passou |
-| 3 | criar biblioteca sem nome | POST sem nome retorna erro de validação | ✅ Passou |
-| 4 | atualizar biblioteca | PUT atualiza os dados corretamente | ✅ Passou |
-| 5 | atualizar biblioteca inexistente | PUT com ID inválido retorna 404 | ✅ Passou |
-| 6 | deletar biblioteca | DELETE remove o registro do banco | ✅ Passou |
-| 7 | deletar biblioteca inexistente | DELETE com ID inválido retorna 404 | ✅ Passou |
+### Autores - 7 testes PASSANDO
+- listar autores
+- criar autor com dados válidos
+- criar autor sem nome
+- atualizar autor
+- atualizar autor inexistente
+- deletar autor
+- deletar autor inexistente
 
-## Problemas Encontrados
+### Pessoas - 7 testes PASSANDO
+- listar pessoas
+- criar pessoa com dados válidos
+- criar pessoa sem nome
+- atualizar pessoa
+- atualizar pessoa inexistente
+- deletar pessoa
+- deletar pessoa inexistente
 
-- As rotas de **Livros** e **Pessoas** ainda não foram implementadas na aplicação, portanto os testes para esses endpoints serão adicionados assim que o professor disponibilizar via Sync Fork.
+### Users - 7 testes PASSANDO
+- listar users
+- criar user com dados válidos
+- criar user sem email
+- atualizar user
+- atualizar user inexistente
+- deletar user
+- deletar user inexistente
+
+### Livros - 7 testes FALHANDO (bugs na aplicação)
+- listar livros
+- criar livro com dados válidos
+- criar livro sem título
+- atualizar livro
+- atualizar livro inexistente
+- deletar livro
+- deletar livro inexistente
+
+## Bugs Encontrados
+
+### LivroController
+- index(), store(), update(), destroy() nao implementados - retornam 500
+
+### AutorController
+- index(), store(), update(), destroy() nao implementados - retornam 500
+
+### PessoaController
+- store() nao valida dados - deveria retornar 422
+- update() redireciona 302 em vez de 404 para registros inexistentes
+- destroy() metodo vazio - nao deleta registros
+
+### UserController
+- store() nao valida dados - deveria retornar 422
+- update() e destroy() redirecionam 302 em vez de 404
 
 ## GitHub Actions
-
-O workflow está configurado em `.github/workflows/tests.yml` e executa automaticamente a cada pull request para a branch `develop`.
+Workflow configurado em .github/workflows/tests.yml para rodar automaticamente a cada pull request para a branch develop.
 
 ## Como executar os testes
-
-```bash
 cp .env.example .env
 php artisan key:generate
 php artisan migrate
 php artisan test
-```
